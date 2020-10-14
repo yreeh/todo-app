@@ -1,0 +1,65 @@
+{% extends 'home_base.html'%}
+{% block content %}
+{% load static %}
+<style type="text/css">
+    #logout {text-decoration:underline; float:right}
+    .add {transform: translate(5px, -2px);}
+    .delete {transform: translate(2px, -2px);}
+    .i_account {transform: translate(-5px, -2px);}
+    .in_add {width: 67%;}
+    .float-left {float: left-important; font-size: 19px; padding: 5px; transform: translate(-10px, 2px);}
+    .profile {color: #000;}
+    .icon {transform: translate(-7px, -1px);}
+</style>
+<div class="row mt-5">
+    <div class="col">
+        {% if user.is_authenticated %}
+        <div class="alert alert-dark" role="alert">
+            <img class="i_account" src="{% static '/accounts/image/face-black-18dp.svg' %}" alt='account_circle'><span class="profile">{{request.user}}</span><a id="logout" href="/logout/">Logout</a>
+        </div>
+    </div>
+</div>
+<div class="row mt-4">
+    <div class="col ml">
+        <h2>Add item</h2>
+        <form method="post" action="add_todo" class="form-inline">
+            <input type="text" name="content" class="form-control mb-2 in_add" placeholder="type here...">
+            <button type="submit" class="btn btn-primary mb-2 ml-2 pd-rg-10">Add<img class="add" src="{% static '/accounts/image/add_circle-white-18dp.svg' %}" alt='account_circle'></button>
+        </form>
+        {% for message in messages %}
+            {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                <div class="alert alert-danger" role="alert">
+                    <img class="icon" src="{% static '/accounts/image/report_problem-black-18dp.svg' %}" alt="report_problem"><span style="font-weight: 700;">{{ message }}</span>
+                </div>
+            {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                <div class="alert alert-success" role="alert">
+                     <img class="icon" src="{% static '/accounts/image/verified-black-18dp.svg' %}" alt="verified_user"><span style="font-weight: 700;">{{ message }}</span>
+                </div>
+            {% endif %}
+        {% endfor %}
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col">
+        <ul class="list-group">
+            {% for todo_item in todo_items %}
+                <li class="list-group-item">
+                    <div class="float-left">
+                        {{todo_item.text}}
+                    </div>
+                    <div class="float-right">
+                        <form action="delete_todo/{{todo_item.id}}" method="post">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-danger btn-sm">Delete<img class="delete" src="{% static '/accounts/image/delete-white-18dp.svg' %}" alt='delete'></button>
+                        </form>
+                    </div>
+                </li>
+            {% endfor %}
+        {% else %}
+            <p>You are not connected. <a href="/login/">Login ?</a><a href="/register/">Register</a></p>
+        {% endif %}
+        </ul>
+    </div>
+</div>
+{% endblock content %}

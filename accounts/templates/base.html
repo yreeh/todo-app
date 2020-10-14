@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="My todoapp">
+    <meta name="keywords" content="Todo, Todoapp, my todo, django, django app">
+    <meta name="author" content="yreeh">
+    <meta name="viewport" content="width=device-width">
+    <title>Todoapp</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'accounts/css/styles.css' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="navbar-brand" href="/">
+            <h1 class="app_title">Todoapp</h1>
+        </a>
+    </nav>
+    <div class="container">
+        {% block content %}{% endblock content %}
+    </div>
+</body>
+</html>

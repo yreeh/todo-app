@@ -1,0 +1,47 @@
+{% extends 'base.html'%}
+{% block content %}
+{% load static %}
+<style type="text/css">
+    .send {transform: translate(-1px, -2px); font-size: 17px;}
+    a { font-size: 18px; }
+    h2 {font-weight: 700; margin:0; color:#fff; letter-spacing: 3px;}
+    .icon {transform: translate(-6px, -2px);}
+</style>
+<div class="row mt-5">
+    <div class="col">
+        <div class="alert alert-dark" role="alert">
+            <h2>Login</h2>
+        </div>
+        <div class="row mt-4">
+            <div class="col ml-4">
+                <form method="post" action="">
+                    {% csrf_token %}
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" name="username" class="form-control" id="username" placeholder="Your username...">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" name="password" class="form-control" id="password" placeholder="Your password...">
+                    </div>
+                    {% for message in messages %}
+                        {% if message.level == DEFAULT_MESSAGE_LEVELS.ERROR %}
+                            <div class="alert alert-danger" role="alert">
+                                <img class="icon" src="{% static '/accounts/image/report_problem-black-18dp.svg' %}" alt="report_problem"><span style="font-weight: 700;">{{ message }}</span>
+                            </div>
+                        {% elif message.level == DEFAULT_MESSAGE_LEVELS.SUCCESS %}
+                            <div class="alert alert-success" role="alert">
+                                 <img class="icon" src="{% static '/accounts/image/verified-black-18dp.svg' %}" alt="verified_user"><span style="font-weight: 700;">{{ message }}</span>
+                            </div>
+                        {% endif %}
+                    {% endfor %}
+                    <div class="form-group mt-4">
+                        <button type="submit" class="btn btn-primary mb-2 ml-2 pd-rg-10">submit <img class="send" src="{% static '/accounts/image/send-white-18dp.svg' %}" alt='account_circle'></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <a href="/register/">Sign up ?</a>
+    </div>
+</div>
+{% endblock content %}
